@@ -1,0 +1,205 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Pretendard', sans-serif;
+}
+
+body {
+    background-color: #08090c;
+    color: #f1f5f9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.app-container {
+    width: 100%;
+    max-width: 440px;
+    height: 100%;
+    background-color: #0f1117;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.9);
+    position: relative;
+    overflow: hidden;
+}
+
+/* 상단 헤더 */
+.app-header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 16px 20px;
+    background: linear-gradient(to bottom, rgba(15,17,23,0.85), transparent);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 20;
+}
+
+.char-title h2 {
+    font-size: 15px;
+    font-weight: 600;
+    color: #ffffff;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+.char-title span {
+    font-size: 11px;
+    color: #a78bfa;
+    font-weight: 500;
+}
+
+.top-menu-btn {
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #e2e8f0;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    cursor: pointer;
+    backdrop-filter: blur(4px);
+}
+
+/* 대형 일러스트 영역 */
+.hero-illustration {
+    width: 100%;
+    height: 45vh;
+    position: relative;
+    background: #000;
+    overflow: hidden;
+}
+
+.hero-illustration img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    filter: saturate(1.1) contrast(1.05);
+}
+
+.gradient-fade {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    background: linear-gradient(to top, #0f1117, rgba(15,17,23,0.7) 40%, transparent);
+}
+
+/* 스토리 로그 영역 */
+.story-scroll-area {
+    flex: 1;
+    padding: 0 16px 10px 16px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    z-index: 10;
+    margin-top: -25px;
+}
+
+.story-card {
+    background: rgba(22, 26, 35, 0.88);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(12px);
+    padding: 15px 18px;
+    border-radius: 14px;
+    font-size: 14px;
+    line-height: 1.6;
+    color: #e2e8f0;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+    animation: slideUp 0.3s ease-out;
+}
+
+.story-card.user-action {
+    background: rgba(99, 102, 241, 0.18);
+    border-color: rgba(99, 102, 241, 0.35);
+    color: #c7d2fe;
+    align-self: flex-end;
+    max-width: 85%;
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* 하단 컨트롤 패널 */
+.control-panel {
+    padding: 14px 16px;
+    background: #0f1117;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 20;
+}
+
+.choices-box {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.choice-option-btn {
+    background: linear-gradient(135deg, #181c27 0%, #11141c 100%);
+    border: 1px solid rgba(139, 92, 246, 0.25);
+    color: #f1f5f9;
+    padding: 11px 14px;
+    text-align: left;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.choice-option-btn:hover {
+    background: linear-gradient(135deg, #312e81 0%, #1e1b4b 100%);
+    border-color: #8b5cf6;
+    color: #ffffff;
+    transform: translateY(-1px);
+}
+
+.input-area {
+    display: flex;
+    gap: 8px;
+    margin-top: 2px;
+}
+
+.input-area input {
+    flex: 1;
+    background-color: #161922;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 11px 14px;
+    border-radius: 10px;
+    color: white;
+    font-size: 13px;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.input-area input:focus {
+    border-color: #8b5cf6;
+}
+
+.input-area button {
+    background-color: #6366f1;
+    color: white;
+    border: none;
+    padding: 0 18px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 13px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.input-area button:hover {
+    background-color: #4f46e5;
+}

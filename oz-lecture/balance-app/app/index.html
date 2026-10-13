@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>오늘의 가치관 토론</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen bg-slate-50 flex flex-col items-center justify-center p-4">
+
+    <div class="w-full max-w-md bg-white rounded-2xl shadow-xl p-6 space-y-6 border border-slate-100">
+        
+        <!-- 상단 뱃지 및 질문 -->
+        <div class="text-center space-y-2">
+            <span class="bg-rose-100 text-rose-600 text-xs font-semibold px-3 py-1 rounded-full">
+                🔥 오늘의 가치관 토론
+            </span>
+            <h1 class="text-xl font-bold text-slate-800 leading-snug">
+                애인과 1박 2일 여행, 부모님께 솔직히 말하기 vs 친구랑 간다고 거짓말하기
+            </h1>
+        </div>
+
+        <!-- [화면 1] 투표 전: A vs B 버튼 -->
+        <div id="vote-section" class="space-y-3">
+            <button onclick="selectChoice('부모님께 솔직히 말하기')" class="w-full p-4 rounded-xl border-2 border-slate-200 hover:border-rose-500 hover:bg-rose-50/50 font-medium text-slate-700 text-left transition cursor-pointer">
+                <span class="font-bold text-rose-500 mr-2">A.</span> 부모님께 솔직히 말하기
+            </button>
+            <button onclick="selectChoice('친구랑 간다고 거짓말하기')" class="w-full p-4 rounded-xl border-2 border-slate-200 hover:border-rose-500 hover:bg-rose-50/50 font-medium text-slate-700 text-left transition cursor-pointer">
+                <span class="font-bold text-rose-500 mr-2">B.</span> 친구랑 간다고 거짓말하기
+            </button>
+        </div>
+
+        <!-- [화면 2] 코멘트 작성 영역 -->
+        <div id="comment-section" class="hidden space-y-4">
+            <div class="bg-rose-50 p-3 rounded-xl text-center">
+                <p class="text-xs text-slate-500">내가 선택한 답변:</p>
+                <p id="my-choice-text" class="font-bold text-rose-600 text-sm"></p>
+            </div>
+            
+            <div class="space-y-2">
+                <label class="text-xs font-bold text-slate-700">이유나 나의 생각을 한 줄로 남겨주세요 (필수)</label>
+                <input type="text" id="my-comment-input" placeholder="예: 거짓말하면 맘이 너무 불편해서 못 살아요." class="w-full p-3 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-rose-500">
+            </div>
+
+            <button onclick="submitPost()" class="w-full bg-rose-500 text-white font-semibold py-3 rounded-xl shadow-md hover:bg-rose-600 transition cursor-pointer">
+                토론장에 내 의견 등록하고 구경하기 👉
+            </button>
+        </div>
+
+        <!-- [화면 3] 실시간 토론장 리스트 -->
+        <div id="match-section" class="hidden space-y-4">
+            <div class="flex items-center justify-between py-2 border-b border-slate-100">
+                <h2 class="text-lg font-bold text-slate-800">💬 실시간 토론장</h2>
+                <button onclick="goHome()" class="text-xs text-rose-500 font-semibold hover:underline cursor-pointer">← 다시 투표하기</button>
+            </div>
+            <p class="text-xs text-slate-500">
+                다른 유저들이 남긴 코멘트입니다. 마음에 드는 상대에게 대화를 걸어보세요!
+            </p>
+            
+            <div id="card-list" class="space-y-3">
+                <!-- 자바스크립트로 카드가 여기에 꽂힙니다 -->
+            </div>
+        </div>
+
+        <!-- [화면 4] 1:1 채팅방 화면 (풍부해진 답변 풀 적용) -->
+        <div id="chat-section" class="hidden space-y-4">
+            <div class="flex items-center justify-between py-2 border-b border-slate-100">
+                <h2 id="chat-room-title" class="text-lg font-bold text-slate-800">채팅방</h2>
+                <button onclick="backToMatch()" class="text-xs text-rose-500 font-semibold hover:underline cursor-pointer">← 토론장으로</button>
+            </div>
+
+            <!-- 대화 내용 박스 -->
+            <div class="bg-slate-50 h-64 p-3 rounded-xl overflow-y-auto space-y-3 flex flex-col" id="chat-messages">
+                <div class="self-start bg-white p-3 rounded-2xl shadow-sm border border-slate-100 max-w-[80%]">
+                    <p class="text-xs text-rose-500 font-bold mb-1">시스템 매칭 메시지</p>
+                    <p id="chat-intro-msg" class="text-xs text-slate-600"></p>
+                </div>
+            </div>
+
+            <!-- 메시지 입력창 -->
+            <div class="flex gap-2">
+                <input type="text" id="chat-input" placeholder="첫 마디를 건네보세요..." onkeypress="if(event.key === 'Enter') sendMessage()" class="flex-1 p-3 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-rose-500">
+                <button onclick="sendMessage()" class="bg-slate-900 text-white px-4 rounded-xl text-sm font-medium hover:bg-slate-800 transition cursor-pointer">전송</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        let posts = [
+            { id: 1, nickname: "도토리묵", age: 26, choice: "친구랑 간다고 거짓말하기", comment: "솔직히 말하면 속만 시끄러워짐. 부모님 걱정 끼쳐드리는 것보다 가끔은 거짓말이 편함." },
+            { id: 2, nickname: "젤리몬스터", age: 28, choice: "친구랑 간다고 거짓말하기", comment: "어른들 입장에서는 당연히 오해하시니까 피곤해서라도 숨기는 게 맞음." },
+            { id: 3, nickname: "라떼는말이야", age: 25, choice: "부모님께 솔직히 말하기", comment: "거짓말 시작하면 감당 못 해요. 차라리 처음부터 솔직하게 말하는 게 맘 편함." }
+        ];
+
+        let mySelectedChoice = "";
+        let currentChatUser = "";
+        
+        // 중복 답변 방지를 위한 이전 인덱스 추적 변수
+        let lastReplyIndex = -1;
+
+        function selectChoice(choice) {
+            mySelectedChoice = choice;
+            document.getElementById('my-choice-text').innerText = `"${choice}"`;
+            document.getElementById('vote-section').classList.add('hidden');
+            document.getElementById('comment-section').classList.remove('hidden');
+        }
+
+        function submitPost() {
+            const commentInput = document.getElementById('my-comment-input').value;
+            if(!commentInput) {
+                alert("이유나 생각을 한 줄 적어주세요!");
+                return;
+            }
+
+            posts.unshift({
+                id: Date.now(),
+                nickname: "나 (테스트)",
+                age: 26,
+                choice: mySelectedChoice,
+                comment: commentInput
+            });
+
+            renderCards();
+
+            document.getElementById('comment-section').classList.add('hidden');
+            document.getElementById('match-section').classList.remove('hidden');
+        }
+
+        function renderCards() {
+            const listContainer = document.getElementById('card-list');
+            listContainer.innerHTML = "";
+
+            posts.forEach(post => {
+                const card = document.createElement('div');
+                card.className = "bg-slate-50 p-4 rounded-2xl border border-slate-100 space-y-3";
+                card.innerHTML = `
+                    <div class="flex justify-between items-center">
+                        <span class="font-bold text-slate-800">${post.nickname} <span class="text-xs font-normal text-slate-400">(${post.age})</span></span>
+                        <span class="text-xs bg-white text-slate-600 px-2.5 py-1 rounded-full font-medium border border-slate-200">${post.choice}</span>
+                    </div>
+                    <p class="text-sm text-slate-600 italic">"${post.comment}"</p>
+                    <button onclick="openChat('${post.nickname}', '${post.choice}', '${post.comment}')" class="w-full bg-slate-900 text-white font-medium py-2 rounded-xl text-sm hover:bg-slate-800 transition cursor-pointer">
+                        대화 걸기 (첫마디 보내기)
+                    </button>
+                `;
+                listContainer.appendChild(card);
+            });
+        }
+
+        function openChat(nickname, choice, comment) {
+            currentChatUser = nickname;
+            lastReplyIndex = -1;
+            document.getElementById('chat-room-title').innerText = `${nickname}님과의 채팅`;
+            
+            const chatMessages = document.getElementById('chat-messages');
+            chatMessages.innerHTML = `
+                <div class="self-start bg-white p-3 rounded-2xl shadow-sm border border-slate-100 max-w-[80%]">
+                    <p class="text-xs text-rose-500 font-bold mb-1">시스템 매칭 메시지</p>
+                    <p class="text-xs text-slate-600">${nickname}님은 "${choice}"을(를) 고르셨네요!<br>"${comment}"</p>
+                </div>
+            `;
+            
+            document.getElementById('match-section').classList.add('hidden');
+            document.getElementById('chat-section').classList.remove('hidden');
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('chat-input');
+            const text = input.value.trim();
+            if(!text) return;
+
+            const chatMessages = document.getElementById('chat-messages');
+
+            const myMsg = document.createElement('div');
+            myMsg.className = "self-end bg-rose-500 text-white p-3 rounded-2xl shadow-sm max-w-[80%] text-sm";
+            myMsg.innerText = text;
+            chatMessages.appendChild(myMsg);
+
+            input.value = "";
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+
+            setTimeout(() => {
+                const replies = [
+                    "아 맞아요! 저도 그 생각 했는데 정말 공감되네요 ㅋㅋ",
+                    "음... 그렇게 깊게 생각해보니 그럴 수도 있겠네요! 자세히 얘기해 주실래요?",
+                    "완전 공감해요! 주변에서도 다들 비슷하게 고민하더라고요 ㅎㅎ",
+                    "에이 설마요! 저는 절대 그렇게 못 할 것 같은데 ㅋㅋㅋ 본인은 진짜 그러실 수 있어요?",
+                    "크으, 명답이시네요! 저랑 가치관이 꽤 잘 맞으시는 듯?",
+                    "사실 저도 살짝 고민했던 부분인데, 이렇게 얘기 나누니까 재밌네요!",
+                    "오... 그런 시선으로 보는 건 또 새롭네요. 인정합니다 👍",
+                    "맞아요, 그게 현실적으로 가장 현명한 방법 같기도 해요."
+                ];
+                
+                let randomIndex;
+                do {
+                    randomIndex = Math.floor(Math.random() * replies.length);
+                } while (randomIndex === lastReplyIndex && replies.length > 1);
+                
+                lastReplyIndex = randomIndex;
+                const selectedReply = replies[randomIndex];
+
+                const otherMsg = document.createElement('div');
+                otherMsg.className = "self-start bg-white text-slate-800 p-3 rounded-2xl shadow-sm border border-slate-100 max-w-[80%] text-sm";
+                otherMsg.innerHTML = `<p class="text-xs text-slate-400 font-bold mb-1">${currentChatUser}</p>${selectedReply}`;
+                chatMessages.appendChild(otherMsg);
+
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }, 1200);
+        }
+
+        function backToMatch() {
+            document.getElementById('chat-section').classList.add('hidden');
+            document.getElementById('match-section').classList.remove('hidden');
+        }
+
+        function goHome() {
+            document.getElementById('match-section').classList.add('hidden');
+            document.getElementById('vote-section').classList.remove('hidden');
+            document.getElementById('my-comment-input').value = "";
+        }
+    </script>
+</body>
+</html>

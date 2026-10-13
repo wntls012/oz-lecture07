@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <title>input</title>
+    <!-- 내부스타일 -->
+    <style>
+      input[type="email"] {
+        background-color: blue;
+        color: #fff;
+      }
+    </style>
+ </head>
+  <body>
+     <h1>input 실습</h1>
+      <form action="/signup" method="post">  
+            <label for="userid"> 아이디 </label>
+            <input type="text" 
+                id="userid"
+                name="userid"
+                placeholder="영문과 숫자 4자 이상"                
+                value="아이디를 입력해 주세요"
+                /> 
+                <div>
+                 <h2>type 연습 </h2>
+                 <input type="email" name="uesr-email" />
+                 <input type="number" name="age" />   
+                 <input type="date" name="birth" />
+                 <input type="range" name="slider" /> 
+                 <input type="color" name="user-color"  /> 
+                </div>
+                
+                <div>
+                  <h2> 여러 선택지 제공</h2>
+                <div>  
+                  <h3> checkbox - 여러개를 함께 고를 때</h3>
+                  <input type="checkbox" id="tos" name="agree" value="tos" />
+                  <label for="tos">이용약관에 동의합니다</label>
+                  <input type="checkbox" id="mail" name="agree" value="tos" />
+                  <label for="tos">메일 수신에 동의합니다</label>
+                </div>
+                <div>
+                  <h3>radio - 여럿 중 하나만 고를 때</h3>
+                  <p>요금제를 선택하세요</p>
+                  <input type="radio" id="free" name="plan" value="free" />
+                  <label for="tos">무료</label>
+                  <input type="radio" id="pro" name="plan" value="pro" />
+                  <label for="pro">유료</label>
+                </div>
+                <div>
+                  <h3>select - 목록에서 하나만 고를 때</h3>
+                  <label for="city">지역</label>
+                  <select id="city" name="city">
+                  <option value="">선택하세요</option>
+                  <option value="seoul">서울</option>
+                  <option value="busan">부산</option>                 
+                </select>             
+                </div>          
+                <hr />
+                <label for="intro">자기소개</label>
+                                <textarea id="intro" name="intro" rows="5" placeholder="자유롭게 적어주세요"></textarea>
+        <button type="submit">가입</button>
+            
+
+        </form>
+ </body>
+</html>

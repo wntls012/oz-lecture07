@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crack - Home Main</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Pretendard', sans-serif;
+        }
+
+        body {
+            background-color: #0b0d12;
+            color: #f1f5f9;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* 상단 네비게이션 바 */
+        .main-header {
+            width: 100%;
+            height: 70px;
+            background: rgba(11, 13, 18, 0.9);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 40px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+
+        .logo {
+            font-size: 20px;
+            font-weight: 700;
+            color: #ffffff;
+            letter-spacing: -0.5px;
+        }
+
+        .logo span {
+            color: #8b5cf6;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 24px;
+        }
+
+        .nav-item {
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .nav-item.active, .nav-item:hover {
+            color: #ffffff;
+        }
+
+        .user-profile-btn {
+            background: #161b26;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #fff;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            cursor: pointer;
+        }
+
+        /* 메인 콘텐츠 바디 영역 */
+        .main-body {
+            flex: 1;
+            max-width: 1280px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 40px;
+        }
+
+        /* 상단 배너 / 추천 섹션 */
+        .hero-banner {
+            width: 100%;
+            height: 320px;
+            border-radius: 20px;
+            background: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #0f1219 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 0 50px;
+            margin-bottom: 50px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(139, 92, 246, 0.2);
+        }
+
+        .hero-banner h1 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: #ffffff;
+        }
+
+        .hero-banner p {
+            font-size: 15px;
+            color: #cbd5e1;
+            margin-bottom: 24px;
+            line-height: 1.5;
+        }
+
+        .start-now-btn {
+            background: #8b5cf6;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 14px;
+            width: max-content;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .start-now-btn:hover {
+            background: #7c3aed;
+        }
+
+        /* 섹션 타이틀 */
+        .section-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #f8fafc;
+        }
+
+        /* 스토리 카드 그리드 (바둑판식 나열) */
+        .story-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 24px;
+        }
+
+        .story-card {
+            background: #131722;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 16px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .story-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(139, 92, 246, 0.4);
+        }
+
+        .card-img-box {
+            width: 100%;
+            height: 280px;
+            position: relative;
+            background: #000;
+        }
+
+        .card-img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .card-tag {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(6px);
+            color: #a78bfa;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 4px 8px;
+            border-radius: 6px;
+            border: 1px solid rgba(139, 92, 246, 0.3);
+        }
+
+        .card-info {
+            padding: 16px;
+        }
+
+        .card-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #f1f5f9;
+            margin-bottom: 6px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis; /* 안전한 말줄임표 처리 */
+        }
+
+        .card-desc {
+            font-size: 13px;
+            color: #94a3b8;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis; /* 안전한 말줄임표 처리 */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 상단 네비게이션 -->
+    <header class="main-header">
+        <div class="logo">CRACK <span>// CLONE</span></div>
+        <nav class="nav-menu">
+            <a class="nav-item active">홈</a>
+            <a class="nav-item">인기 스토리</a>
+            <a class="nav-item">내 캐릭터</a>
+            <a class="nav-item">제작하기</a>
+        </nav>
+        <button class="user-profile-btn">마이페이지</button>
+    </header>
+
+    <!-- 메인 바디 -->
+    <div class="main-body">
+        
+        <!-- 상단 히어로 배너 -->
+        <section class="hero-banner">
+            <h1>당신만의 몰입형 AI 스토리, 지금 시작하세요.</h1>
+            <p>엄선된 캐릭터들과 실시간으로 대화하고, 운명을 바꿀 선택지를 고르세요.</p>
+            <button class="start-now-btn" onclick="alert('스토리 생성 페이지로 이동합니다!')">새 스토리 만들기</button>
+        </section>
+
+        <!-- 캐릭터/스토리 리스트 섹션 -->
+        <h2 class="section-title">🔥 실시간 인기 급상승 스토리</h2>
+        
+        <div class="story-grid">
+            <!-- 카드 1 -->
+            <div class="story-card" onclick="alert('차시연 스토리로 입장합니다!')">
+                <div class="card-img-box">
+                    <span class="card-tag">로판 / 회귀</span>
+                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1000&auto=format&fit=crop" alt="캐릭터">
+                </div>
+                <div class="card-info">
+                    <h3 class="card-title">차시연 : 회귀한 재벌가 후계자</h3>
+                    <p class="card-desc">정말 이사회를 이대로 끝내시겠습니까, 팀장님?</p>
+                </div>
+            </div>
+
+            <!-- 카드 2 -->
+            <div class="story-card">
+                <div class="card-img-box">
+                    <span class="card-tag">판타지 / 액션</span>
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1000&auto=format&fit=crop" alt="캐릭터">
+                </div>
+                <div class="card-info">
+                    <h3 class="card-title">카엘 : 절벽 끝의 기사단장</h3>
+                    <p class="card-desc">네가 선택한 칼끝이 향하는 곳에 나의 충성이 있다.</p>
+                </div>
+            </div>
+
+            <!-- 카드 3 -->
+            <div class="story-card">
+                <div class="card-img-box">
+                    <span class="card-tag">현대 / 로맨스</span>
+                    <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=1000&auto=format&fit=crop" alt="캐릭터">
+                </div>
+                <div class="card-info">
+                    <h3 class="card-title">서윤우 : 비밀을 숨긴 아이돌</h3>
+                    <p class="card-desc">형, 우리 사이의 비밀은 영원히 지켜줄 거지?</p>
+                </div>
+            </div>
+
+            <!-- 카드 4 -->
+            <div class="story-card">
+                <div class="card-img-box">
+                    <span class="card-tag">스릴러 / 느와르</span>
+                    <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=1000&auto=format&fit=crop" alt="캐릭터">
+                </div>
+                <div class="card-info">
+                    <h3 class="card-title">강태수 : 조직의 보스</h3>
+                    <p class="card-desc">선은 내가 넘었어, 감당할 수 있겠나?</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>

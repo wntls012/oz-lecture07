@@ -1,0 +1,24 @@
+/* 다크 모드 기본 커스텀 스크롤바 및 레이아웃 트윅 */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: #0f1117;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #2d3343;
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #374151;
+}
+
+/* 텍스트 영역 자동 높이 조절 등을 위한 기초 설정 */
+textarea {
+    field-sizing: content;
+    max-height: 120px;
+}
