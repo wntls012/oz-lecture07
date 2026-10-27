@@ -48,3 +48,19 @@ function sayHello(name, callback) {
 }
 
 sayHello("주신", () => console.log("콜백 실행"));
+
+// Prmoise
+
+const order = new Promise ((resolve, reject) => {
+    // setTimeout(()=> resolve("아메리카노가 나왔습니다"), 2000);
+    setTimeout(()=> reject("재고가 없습니다"), 2000);
+});
+console.log(order);
+order.then((massage) => {
+    console.log(massage);
+    console.log(order);
+})
+.catch((error) =>{
+    console.log(error);
+    console.log(order);
+})
